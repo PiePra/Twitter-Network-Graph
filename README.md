@@ -8,10 +8,10 @@ podman run --publish=7474:7474 --publish=7687:7687 \
 ```
 Create .env File like
 ```
-api_key="..."
-api_secret="..."
-access_token="..."
-access_token_secret="..."
+export api_key="..."
+export api_secret="..."
+export access_token="..."
+export access_token_secret="..."
 ```
 Source API Env Vars
 ```bash
