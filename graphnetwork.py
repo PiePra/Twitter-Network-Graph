@@ -101,15 +101,8 @@ def graph2vec_construct(filename: str, username: str):
     H = nx.read_gml(f"{username}.gml", label="name")
     convertedgraph = nx.convert_node_labels_to_integers(H)
 
-    # Instantiate a Graph2Vec embedding model. There are
-    # a variety of parameters that can be changed when
-    # instantiating the model (see the above link to the Karate Club library),
-    # but I found 64 feature columns and otherwise default parameters
-    # to provide the best results
+    # Third part
     embedding_model = Graph2Vec(dimensions=64)
-
-    # Now, fit the model to the NetworkX graph, and store the embedding
-    # in a pandas DataFrame
     embedding_model.fit([convertedgraph])
     embeddingsframe = pd.DataFrame(embedding_model.get_embedding())
 
