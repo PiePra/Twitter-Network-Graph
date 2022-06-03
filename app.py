@@ -2,12 +2,10 @@ from numpy import place
 import streamlit as st
 import tweepy
 import pandas as pd
+from py2neo import Graph, Node, Relationship, NodeMatcher
 import os
 import json
 import re
-
-from py2neo import Graph, Node, Relationship, NodeMatcher
-from twitter import api_auth
 
 
 def send_to_neo(df):
@@ -117,6 +115,20 @@ def send_to_neo(df):
                 graph.create(rel)
         except:
             print(f"Cannot parse {line['entities.user_mentions']}")
+
+
+def api_auth():
+    try:
+        api_key = os.getenv("api_key")
+        api_secret = os.getenv("api_secret")
+        access_token = os.getenv("access_token")
+        access_token_secret = os.getenv("access_token_secret")
+        auth = tweepy.OAuthHandler(api_key, api_secret)
+        auth.set_access_token(access_token, access_token_secret)
+        api = tweepy.API(auth, wait_on_rate_limit=True)
+    except:
+        print("No API Key provided")
+    return api
 
 
 def load_tweets(search, lang="", n_items=300):
